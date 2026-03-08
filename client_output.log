@@ -7,3 +7,8 @@
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: use --host to expose
+4:58:47 PM [vite] hmr update /src/App.jsx
+4:58:47 PM [vite] hmr update /src/components/Dashboard.jsx
+4:58:47 PM [vite] hmr update /src/components/Labs.jsx
+4:58:47 PM [vite] hmr update /src/components/OnboardingVideo.jsx
+4:58:47 PM [vite] hmr update /src/components/PasswordGenerator.jsx
