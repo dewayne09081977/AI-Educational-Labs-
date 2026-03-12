@@ -24,15 +24,13 @@ app.get('/api/auth', (req, res) => {
 
 // Serve React frontend in production
 if (process.env.NODE_ENV === 'production') {
-  // Render adds /src/ layer — go up FOUR levels from /server
+  // Correct path for Render's structure
   const clientDistPath = path.resolve(__dirname, '..', '..', '..', '..', 'client', 'dist');
 
-  // Debug log
   console.log('Serving frontend from:', clientDistPath);
 
   app.use(express.static(clientDistPath));
 
-  // Catch-all for React Router
   app.get('*', (req, res) => {
     res.sendFile(path.join(clientDistPath, 'index.html'), (err) => {
       if (err) {
