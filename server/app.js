@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Your existing API routes (add more here as needed)
+// Your existing API routes
 app.get('/api/labs', (req, res) => {
   res.json({ message: 'Labs endpoint' });
 });
@@ -24,10 +24,10 @@ app.get('/api/auth', (req, res) => {
 
 // Serve React frontend in production
 if (process.env.NODE_ENV === 'production') {
-  // Render adds /src/ layer — go up THREE levels from /server
-  const clientDistPath = path.resolve(__dirname, '..', '..', '..', 'client', 'dist');
+  // Render adds /src/ layer — go up FOUR levels from /server
+  const clientDistPath = path.resolve(__dirname, '..', '..', '..', '..', 'client', 'dist');
 
-  // Debug log — this will show the exact path in Render logs
+  // Debug log
   console.log('Serving frontend from:', clientDistPath);
 
   app.use(express.static(clientDistPath));
@@ -42,13 +42,11 @@ if (process.env.NODE_ENV === 'production') {
     });
   });
 } else {
-  // Local dev fallback
   app.get('/', (req, res) => {
     res.send('AI Educational Labs API - Running in development mode');
   });
 }
 
-// Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
