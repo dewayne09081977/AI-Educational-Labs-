@@ -1,15 +1,15 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const path = require('path'); // ← Add this line (important!)
+const path = require('path');
 
 const app = express();
-const port = process.env.PORT || 3000; // ← This is already correct for Render
+const port = process.env.PORT || 3000; // Render sets PORT automatically
 
 app.use(cors());
 app.use(express.json());
 
-// Your existing API routes (add more here as needed)
+// Your API routes (expand these as needed)
 app.get('/api/labs', (req, res) => {
   res.json({ message: 'Labs endpoint' });
 });
@@ -22,17 +22,25 @@ app.get('/api/auth', (req, res) => {
   res.json({ message: 'Auth endpoint' });
 });
 
-// Serve the built React frontend (production only)
+// Serve the built React frontend in production
 if (process.env.NODE_ENV === 'production') {
-  // Serve static files from the React build folder
-  app.use(express.static(path.join(__dirname, '../client/dist')));
+  // Use absolute path relative to server folder (works on Render)
+  const clientDistPath = path.resolve(__dirname, '..', 'client', 'dist');
+  
+  // Serve static files (JS, CSS, images, etc.)
+  app.use(express.static(clientDistPath));
 
-  // Send React's index.html for ALL non-API routes (so React Router works)
+  // For all non-API routes, serve React's index.html (for client-side routing)
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+    res.sendFile(path.join(clientDistPath, 'index.html'), (err) => {
+      if (err) {
+        console.error('Error sending index.html:', err);
+        res.status(500).send('Server error loading frontend');
+      }
+    });
   });
 } else {
-  // For local dev: optional fallback message
+  // Local dev fallback (shows API text when hitting root)
   app.get('/', (req, res) => {
     res.send('AI Educational Labs API - Running in development mode');
   });
