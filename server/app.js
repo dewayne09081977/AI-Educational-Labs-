@@ -1,6 +1,28 @@
-// ... your existing code (dotenv, express, cors, routes)
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
 
-// Serve React frontend in production
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(cors());
+app.use(express.json());
+
+// Your existing API routes (add more here as needed)
+app.get('/api/labs', (req, res) => {
+  res.json({ message: 'Labs endpoint' });
+});
+
+app.get('/api/admin', (req, res) => {
+  res.json({ message: 'Admin endpoint' });
+});
+
+app.get('/api/auth', (req, res) => {
+  res.json({ message: 'Auth endpoint' });
+});
+
+// Serve the built React frontend (production only)
 if (process.env.NODE_ENV === 'production') {
   // Absolute path from inside /server: up two levels to root → client/dist
   const clientDistPath = path.resolve(__dirname, '..', '..', 'client', 'dist');
@@ -20,12 +42,13 @@ if (process.env.NODE_ENV === 'production') {
     });
   });
 } else {
+  // Local dev fallback
   app.get('/', (req, res) => {
     res.send('AI Educational Labs API - Running in development mode');
   });
 }
 
-// Start server
+// Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
