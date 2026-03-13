@@ -24,6 +24,7 @@ app.get('/api/auth', (req, res) => {
 
 // Serve React frontend in production
 if (process.env.NODE_ENV === 'production') {
+  // Render's full structure: /opt/render/project/src/server → up 6 levels to root → client/dist
   const clientDistPath = path.resolve(__dirname, '..', '..', '..', '..', '..', '..', 'client', 'dist');
 
   console.log('Serving frontend from:', clientDistPath);
