@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-do
 import './index.css';
 import Home from './components/Home';
 import Labs from './components/Labs';
+import LabDetail from './components/LabDetail';
 import Dashboard from './components/Dashboard';
 import OnboardingVideo from './components/OnboardingVideo';
 import PasswordGenerator from './components/PasswordGenerator';
+import Admin from './components/Admin';
 
 function App() {
   return (
@@ -21,15 +23,18 @@ function App() {
           <li><NavLink to="/dashboard" className={({ isActive }) => isActive ? 'active' : ''}>Dashboard</NavLink></li>
           <li><NavLink to="/onboarding" className={({ isActive }) => isActive ? 'active' : ''}>Get Started</NavLink></li>
           <li><NavLink to="/tools" className={({ isActive }) => isActive ? 'active' : ''}>Tools</NavLink></li>
+          <li><NavLink to="/admin" className={({ isActive }) => isActive ? 'active' : ''}>Admin</NavLink></li>
         </ul>
       </nav>
 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/labs" element={<Labs />} />
+        <Route path="/labs/:slug" element={<LabDetail />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/onboarding" element={<OnboardingVideo />} />
         <Route path="/tools" element={<PasswordGenerator />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
 
       <footer className="footer">
