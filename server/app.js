@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Your existing API routes (expand these as needed)
+// API routes
 app.get('/api/labs', (req, res) => {
   res.json({ message: 'Labs endpoint' });
 });
@@ -24,7 +24,8 @@ app.get('/api/auth', (req, res) => {
 
 // Serve React frontend in production
 if (process.env.NODE_ENV === 'production') {
-  const clientDistPath = path.resolve(__dirname, '..', '..', '..', '..', '..', '..', 'client', 'dist');
+  // server/ is one level inside repo root — go up 1 level to reach client/dist
+  const clientDistPath = path.resolve(__dirname, '..', 'client', 'dist');
 
   console.log('Serving frontend from:', clientDistPath);
 
